@@ -1,0 +1,4 @@
+'RandicTemperature.conjecture_430943_edge_form' depends on axioms: [propext, Classical.choice, Quot.sound]
+'RandicTemperature.conjecture_430943' depends on axioms: [propext, Classical.choice, Quot.sound]
+'RandicTemperature.pointwise_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'RandicTemperature.optimal_constant' depends on axioms: [propext, Classical.choice, Quot.sound]

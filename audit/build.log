@@ -1,0 +1,6 @@
+ℹ [6408/6410] Built RandicTemperature (2.3s)
+info: RandicTemperature.lean:182:0: 'RandicTemperature.conjecture_430943_edge_form' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: RandicTemperature.lean:183:0: 'RandicTemperature.conjecture_430943' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: RandicTemperature.lean:184:0: 'RandicTemperature.pointwise_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: RandicTemperature.lean:185:0: 'RandicTemperature.optimal_constant' depends on axioms: [propext, Classical.choice, Quot.sound]
+Build completed successfully (6410 jobs).

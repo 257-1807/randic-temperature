@@ -1,0 +1,5 @@
+n=2: 1 connected labeled graphs passed; 0 exact pointwise ties
+n=3: 4 connected labeled graphs passed; 1 exact pointwise ties
+n=4: 38 connected labeled graphs passed; 1 exact pointwise ties
+n=5: 728 connected labeled graphs passed; 0 exact pointwise ties
+n=6: 26704 connected labeled graphs passed; 0 exact pointwise ties
