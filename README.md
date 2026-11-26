@@ -6,6 +6,8 @@ $$R(G)\ \le\ \frac34\,\frac{2^{d(v)}}{T(v)},\qquad T(v)=\frac{d(v)}{n-d(v)}.$$
 
 因此 Duhamel–Cazenave 语料条目 **#430943** 成立。其中对顶点取最大值的原式也可以使用系数 $3/4$，且该系数最优，三角形取等。$R(G)$ 是对无向边 $uv$ 的 $1/\sqrt{d(u)d(v)}$ 求和。
 
+[证明](#证明) · [Lean 主文件](RandicTemperature.lean) · [查重与先例](audit/search.md)
+
 ## 猜想出处与查重
 
 Elie Duhamel 和 Tristan Cazenave 在 *Spectral Graph Theory Conjecture Generation*（2026）公开了生成语料，并在第 3 页定义了顶点温度及 Randić 指标。Tristan Cazenave 在 *Lemmas and Conjectures in Spectral Graph Theory*（2026，arXiv:2611.03879v1）第 8 节给出带状态的索引。#430943 位于该补充数据中，原始逐字陈述如下。[生成论文](https://www.lamsade.dauphine.fr/~cazenave/papers/SpectralGraphTheoryConjectureGeneration.pdf) · [后续预印本](https://arxiv.org/html/2611.03879v1#S8) · [索引压缩包](https://www.lamsade.dauphine.fr/~cazenave/papers/preuves_spectrales.zip)
@@ -15,6 +17,8 @@ Elie Duhamel 和 Tristan Cazenave 在 *Spectral Graph Theory Conjecture Generati
 2026 年 11 月 25 日检查时，该行标为 `ouverte`，已核验的公开来源中未找到对目标式的此前完整证明。近邻 #431156 的分子是 $d(v)^2$。经典的 $2R(G)\le n$ 出现在作者的证明库中。[平台、关键词、既有成果与限制](audit/search.md)
 
 ## 证明
+
+先对每条边估计权重，求和后每个顶点恰好贡献 1。剩下的问题只涉及图有几个顶点和所选顶点的度；最优系数 $3/4$ 来自这个单变量整数估计。
 
 **对边求和。** 对于任意边 $uv$，有
 
@@ -34,6 +38,8 @@ $$2nd\le2d(d+1)(n-d)\le3\cdot2^d(n-d).$$
 
 **最优常数。** 在 $K_3$ 中，每个顶点度为 $2$、温度为 $2$，其顶点表达式为 $2$。三条边各贡献 $1/2$，故 $R(K_3)=3/2$。任何通用上界 $R\le c\max_v 2^{d(v)}/T(v)$ 都要求 $c\ge3/4$。对于 $n=2$，两顶点度数均为 $1$，温度为 $1$，原式成为 $1\le2$。定义域上两处分母都严格为正。
 
+**哪些图达到逐点界？** 对某顶点取等要求每一步都取等。边权的算术–几何平均不等式要求相邻顶点同度，连通性使整图正则。阶数界要求 $n=d+1$，而 $2d(d+1)=3\cdot2^d$ 的正整数解是 $d=2,3$。所以图只能是 $K_3$ 或 $K_4$；直接代入，两者都取等。这一完整分类是上述证明的纸面推论。Lean 的 `triangle_values` 与 `optimal_constant` 验证了三角形见证和常数最优性。经典的 $R(G)\le n/2$ 及其等号条件见 [Wu，定理 1.1，归于 Fajtlowicz](https://doi.org/10.1186/1029-242X-2014-351)。
+
 ## 数学陈述与 Lean 的对应
 
 | 来源中的对象或结论 | Lean 4 表达 |
@@ -51,11 +57,11 @@ $$2nd\le2d(d+1)(n-d)\le3\cdot2^d(n-d).$$
 项目固定 Lean 和 Mathlib v4.36.0，Mathlib 提交为 `fc4f59e577feb1a4956671bc04ac18aaaf8cd842`。安装 elan 后，在此目录运行下列命令。源码开启 `warningAsError`，最后的 `#print axioms` 打印关键定理的公理依赖。
 
 ```sh
-lake exe cache get
+lake exe cache get Mathlib.Combinatorics.SimpleGraph.DegreeSum Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected Mathlib.Analysis.Real.Sqrt Mathlib.Tactic
 lake build
-lake env lean RandicTemperature.lean
+lake env lean -DwarningAsError=true RandicTemperature.lean
 lake env leanchecker RandicTemperature
 python3 scripts/check_small.py
 ```
 
-小图脚本在所有 2 至 6 阶连通标号图上逐顶点检验锐界，共 27,475 张。它用整数平方根构造 Randić 指标的有理上界，比较过程不依赖浮点舍入。实例中 $K_3$、$K_4$ 取等。完整结论由 Lean 证明。[Lean 源码](RandicTemperature.lean) · [构建日志](audit/build.log) · [公理输出](audit/axioms.log) · [内核重放日志](audit/kernel-replay.log) · [枚举日志](audit/small-graphs.log)
+小图脚本在所有 2 至 6 阶连通标号图上逐顶点检验锐界，共 27,475 张。它用整数平方根构造 Randić 指标的有理上界，比较过程不依赖浮点舍入。实例中 $K_3$、$K_4$ 取等。[Lean 源码](RandicTemperature.lean) · [构建日志](audit/build.log) · [公理输出](audit/axioms.log) · [内核重放日志](audit/kernel-replay.log) · [枚举日志](audit/small-graphs.log)

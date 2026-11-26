@@ -25,3 +25,11 @@
 | MathOverflow、Lean Zulip、Mathlib | MathOverflow 搜 `g430943`、`430943 Cazenave` 及 `"Randić index" "temperature"`，各返回 0 条。Zulip 公开频道查 `g430943`、`430943`、`2611.03879`，各返回 0 条。Mathlib 固定版本的源码和参考文献中查 `g430943`、`Randić`、`randicIndex`、`randic_index`、`Fajtlowicz` 均未命中。[MathOverflow](https://api.stackexchange.com/2.3/search/advanced?site=mathoverflow&q=430943%20Cazenave) · [Lean Zulip](https://leanprover.zulipchat.com/#narrow/channels/web-public/search/g430943) · [Mathlib](https://github.com/leanprover-community/mathlib4/tree/fc4f59e577feb1a4956671bc04ac18aaaf8cd842) |
 
 相同题名、关键词和前向引用的核查均未发现此前的完整解答。此结论限于查阅的公开来源。指标定义、AM–GM 和 $R\le n/2$ 均早已有之。首创性不由数据库零命中或 Lean 编译结果保证。
+
+## 独立复核
+
+2026-11-25 重新下载两份作者归档，核实原始文件第 24,228 行、公式及状态。邻近的 #431156 在后续索引中标为 `démontrée`、`verifiee_lean=non`，并列出使用的引理 `deg_range`、`randic_n`。该式的分子为 $d^2$，在 $d=3$ 时为 9，本条分子 $2^d$ 在此为 8。重新检索 3,673 份作者归档的 Lean 源文件，未找到定理名 `g430943`。[原始前缀公式](https://www.lamsade.dauphine.fr/~cazenave/papers/Conjectures.zip) · [后续状态索引](https://www.lamsade.dauphine.fr/~cazenave/papers/preuves_spectrales.zip)
+
+Baoyindureng Wu（2014）在 Theorem 1.1 中将 $R(G)\le n/2$ 归于 Fajtlowicz，并给出等号条件为各连通分支正则且无孤点。在本文连通图域上，这等价于正则性。沿用 README 的标量估计可在纸面上刻画逐顶点界的等号。此时还须 $d=n-1$ 及 $2d(d+1)=3\cdot 2^d$。正整数解只有 $d=2,3$，所以恰为 $K_3,K_4$。源码用 $K_3$ 形式化了常数最优性。原目录式的系数为 1，由于顶点评分为正，其不等号在所有允许的图上均严格。[Wu，Theorem 1.1](https://doi.org/10.1186/1029-242X-2014-351) · [形式化](../RandicTemperature.lean)
+
+本次从远端克隆重新执行了逐点有理上界枚举、`lake build`、源文件公理打印和 `leanchecker`。2 至 6 阶连通标号图中，存在加强式等号顶点的图数依次为 0、1、1、0、0。四个受审计声明的公理均限于 `propext`、`Classical.choice`、`Quot.sound`。[枚举程序](../scripts/check_small.py) · [公理输出](axioms.log)
